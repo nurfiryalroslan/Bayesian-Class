@@ -16,9 +16,9 @@ data poiunit.lkeq;
 do expt=1 to 500;
  do Block=1 to N_Block;
   B_j=sqrt(Block_variance)*rannor(seed);  /* B_j is random block effect                          */
-  do treatment=1 to 2;
+  do treatment=1 to 4;
   u_ij=sqrt(unit_Variance)*rannor(seed);   
-  eta=(treatment=1)*alpha0+(treatment=2)*alpha1+B_j+u_ij; 
+  eta=((treatment=1)+(treatment=2))*alpha0+((treatment=3)+(treatment=4))*alpha1+B_j+u_ij; 
   lamda_ij=exp(eta);                                
    count_ij=ranpoi(seed,lamda_ij);           
    output;
