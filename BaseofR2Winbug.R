@@ -1,18 +1,23 @@
-setwd("I:/R code_wd/Poisson-Norm")
+mainDir <- "G:/R code_wd/Poisson-Norm/Lkeq"
+mainDir2 <-"G:/R output/Poisson-Norm/Lkeq"
+dataDir <-"G:/Simulated dataset/Poisson-Norm/Lkeq"
+
+setwd(mainDir)
 install.packages("R2WinBUGS")
 library(R2WinBUGS)
 
 #first dataset before simulation#
-mixed=read.csv(file="I:/Simulated R dataset/Poisson-Norm/lkeq_1.csv", header=T)
+
+
+subDir <- "1"
+mixed=read.csv(file=paste(file.path(dataDir, subDir),".csv",sep=""), header=T)
 #set working directory#
 
-mainDir <- "I:/R code_wd/Poisson-Norm"
-subDir <- "lkeq01"
+
 dir.create(file.path(mainDir, subDir), showWarnings = FALSE)
 setwd(file.path(mainDir, subDir))
 
 #set output director#
-mainDir2 <- "I:/R output/Poisson-Norm"
 dir.create(file.path(mainDir2, subDir), showWarnings = TRUE)
 outputdirc=file.path(mainDir2, subDir)
 
@@ -40,10 +45,13 @@ poisunit<-function() {
   unitprecisn~dgamma(aunit,bunit)
   blkprecisn~dgamma(ablk,bblk)
   
-  #Compute fit Statistics#  
+  #######Compute fit Statistics#######
   
   
  
+  
+  
+  
   }
 
 
@@ -61,9 +69,9 @@ data=list("y","Trt","Block","aunit","bunit","ablk","bblk","precisn")
 parameters = c("trteff", "blksigma", "unitsigma")
 inits = list(list( trteff = c(2,    1) , blkprecisn=1, unitprecisn=0.5) , 
              list( trteff = c(1.8, 1), blkprecisn=0.5,unitprecisn=0.25))
-fitpoi1 <- bugs(data, inits, parameters, model.file = filename, 
+fitpois <- bugs(data, inits, parameters, model.file = filename, 
                       n.chains=2, n.iter = 50000, n.burnin = 10000, n.thin=1, DIC=TRUE, codaPkg = TRUE , debug=TRUE,
-                      program="WinBUGS", bugs.directory="I:/winbugs14",
+                      program="WinBUGS", bugs.directory="G:/winbugs14",
                       working.directory=outputdirc)
 
 
