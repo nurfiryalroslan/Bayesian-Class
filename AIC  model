@@ -1,0 +1,20 @@
+
+mixed=read.csv((file="C:/Users/user/Desktop/Poisson.csv"), header=T)
+attach(mixed)
+y = as.vector(count_ij)
+y
+Trt = as.vector(treatment)
+Trt
+TrtBlock = as.vector(Block)
+TrtBlock
+
+mu=exp(eta)
+mu
+x=sum(log(dpois(y,mu,log=FALSE)))
+x
+#ALC used the MLE so I did not use the bayes. Is this correct?
+dev <- -2*x
+dev
+k=32 #8 blocks and 4 treatments
+AIC <- dev + 2*k
+AIC
